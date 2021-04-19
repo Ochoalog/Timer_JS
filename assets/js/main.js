@@ -7,9 +7,6 @@ function getTimeFromSeconds(seconds){
 }
 
 const relogio = document.querySelector('.relogio');
-const iniciar = document.querySelector('.iniciar');
-const pausar = document.querySelector('.pausar');
-const zerar = document.querySelector('.zerar');
 let seconds = 0;
 let timer;
 
@@ -20,19 +17,24 @@ function startClock(){
     }, 1000);
 }
 
-iniciar.addEventListener('click', function(event){
-    relogio.classList.remove('pausado');
-    clearInterval(timer);
-    startClock();
-});
+document.addEventListener('click', function(e){
+    const el = e.target;
 
-pausar.addEventListener('click', function(event){
-    clearInterval(timer);
-    relogio.classList.add('pausado');
-});
+    if(el.classList.contains('zerar')){
+        clearInterval(timer);
+        relogio.innerHTML = '00:00:00'
+        relogio.classList.remove('pausado')
+        second = 0;
+    }
 
-zerar.addEventListener('click', function(event){
-    clearInterval(timer);
-    relogio.innerHTML = '00:00:00';
-    seconds = 0;
-}); 
+    if(el.classList.contains('pausar')){
+        clearInterval(timer);
+        relogio.classList.add('pausado');
+    }
+
+    if(el.classList.contains('iniciar')){
+        relogio.classList.remove('pausado');
+        clearInterval(timer);
+        startClock();
+    }
+});
